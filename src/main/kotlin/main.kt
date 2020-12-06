@@ -38,7 +38,9 @@ fun main() = invokeLater {
                 event.acceptDrop(DnDConstants.ACTION_REFERENCE)
                 val droppedFiles = event.transferable.getTransferData(DataFlavor.javaFileListFlavor) as List<*>
                 droppedFiles.forEach {
-                    if (it is File) logViewerViewModel.addFile(it)
+                    if (it is File && it.extension in setOf("txt", "md")) {
+                        logViewerViewModel.addFile(it)
+                    }
                 }
             } catch (e: Exception) {
                 println(event)
@@ -49,7 +51,7 @@ fun main() = invokeLater {
     composePanel.setContent {
         LogViewerWindow(logViewerViewModel)
     }
-    window.setSize(1200, 600)
+    window.setSize(1400, 1000)
     window.isVisible = true
 }
 
