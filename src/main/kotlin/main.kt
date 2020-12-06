@@ -1,33 +1,63 @@
-import androidx.compose.desktop.Window
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.desktop.ComposePanel
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.em
+import ui.LogViewerWindow
+import java.awt.BorderLayout
+import java.awt.Dimension
+import java.awt.datatransfer.DataFlavor
+import java.awt.dnd.DnDConstants
+import java.awt.dnd.DropTarget
+import java.awt.dnd.DropTargetDropEvent
+import java.io.File
+import javax.swing.Box
+import javax.swing.JButton
+import javax.swing.JFrame
+import javax.swing.SwingUtilities.invokeLater
+import javax.swing.WindowConstants
 
-fun main() = Window(title = "Compose for Desktop", size = IntSize(300, 300)) {
-    val count = remember { mutableStateOf(0) }
-    MaterialTheme {
-        Column(Modifier.fillMaxSize(), Arrangement.spacedBy(5.dp)) {
-            Button(modifier = Modifier.align(Alignment.CenterHorizontally),
-                onClick = {
-                    count.value++
-                }) {
-                Text(if (count.value == 0) "Hello World" else "Clicked ${count.value}!")
-            }
-            Button(modifier = Modifier.align(Alignment.CenterHorizontally),
-                onClick = {
-                    count.value = 0
-                }) {
-                Text("Reset")
+
+val logViewerViewModel = LogViewerViewModel()
+
+fun main() = invokeLater {
+    val window = JFrame()
+    val composePanel = ComposePanel()
+    window.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+    window.title = "Log viewer"
+
+    window.contentPane.add(targetZone(object : DropTarget() {
+        override fun drop(event: DropTargetDropEvent) {
+            try {
+                event.acceptDrop(DnDConstants.ACTION_REFERENCE)
+                val droppedFiles = event.transferable.getTransferData(DataFlavor.javaFileListFlavor) as List<*>
+                droppedFiles.forEach {
+                    if (it is File) logViewerViewModel.addFile(it)
+                }
+            } catch (e: Exception) {
+                println(event)
             }
         }
+    }), BorderLayout.WEST)
+    window.contentPane.add(composePanel)
+    composePanel.setContent {
+        LogViewerWindow(logViewerViewModel)
+    }
+    window.setSize(1000, 500)
+    window.isVisible = true
+}
+
+private fun targetZone(target: DropTarget): JButton {
+    return JButton().apply {
+        toolTipText = "ToolTip!"
+        text = "Drop files"
+        preferredSize = Dimension(300, 100)
+        dropTarget = target
     }
 }
