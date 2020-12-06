@@ -5,8 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,9 +39,3 @@ fun LogViewerWindow(logViewerViewModel: LogViewerViewModel) {
         }
     }
 }
-
-@Composable
-fun SearchTextView(text: String, onTextChanged: (String) -> Unit) {
-    TextField(text, onValueChange = { onTextChanged(it) })
-}
-

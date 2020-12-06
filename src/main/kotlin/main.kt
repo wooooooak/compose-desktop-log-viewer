@@ -57,7 +57,7 @@ private fun targetZone(target: DropTarget): JButton {
     return JButton().apply {
         toolTipText = "ToolTip!"
         text = "Drop files"
-        preferredSize = Dimension(250, 100)
+        preferredSize = Dimension(200, 100)
         dropTarget = target
     }
 }

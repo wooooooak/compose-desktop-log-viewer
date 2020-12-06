@@ -58,7 +58,7 @@ class LogViewerViewModel {
         focusedFile.value = if (text.isBlank()) {
             focusedFile.value?.copy(searchedTextLines = fullTextLines)
         } else {
-            focusedFile.value?.copy(searchedTextLines = fullTextLines.filter { text in it.text })
+            focusedFile.value?.copy(searchedTextLines = fullTextLines.filter { text.toLowerCase() in it.text.toLowerCase() })
         }
     }
 }
