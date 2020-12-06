@@ -16,7 +16,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerMoveFilter
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import clouds
 import model.FocusedFile
+import silver
+import wetAsphalt
 import java.io.File
 
 @Composable
@@ -31,7 +34,7 @@ fun ViewerTabsView(
             focusedFile?.index ?: 0,
             edgePadding = 0.dp,
             modifier = Modifier.preferredHeight(45.dp),
-            backgroundColor = Color(52, 73, 94),
+            backgroundColor = wetAsphalt,
             contentColor = activeBlue
         ) {
             files.forEach {
@@ -52,7 +55,7 @@ fun ViewerTab(file: File, onClickTab: (File) -> Unit, onClickDelete: (File) -> U
             Text(
                 file.name,
                 maxLines = 1,
-                color = Color(236, 240, 241),
+                color = clouds,
                 textAlign = TextAlign.Center
             )
         }
@@ -71,8 +74,8 @@ fun ViewerTab(file: File, onClickTab: (File) -> Unit, onClickDelete: (File) -> U
                         false
                     }),
                 colors = ButtonConstants.defaultButtonColors(
-                    backgroundColor = if (active.value) activeBlue else Color(52, 73, 94),
-                    contentColor = Color(189, 195, 199)
+                    backgroundColor = if (active.value) activeBlue else wetAsphalt,
+                    contentColor = silver
                 ),
                 contentPadding = PaddingValues()
             ) {
