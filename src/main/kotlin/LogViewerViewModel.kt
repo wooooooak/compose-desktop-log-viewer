@@ -1,12 +1,22 @@
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import model.FocusedFile
 import java.io.File
 
 class LogViewerViewModel {
-    private val _file = mutableStateOf<File?>(null)
-    val file: State<File?> = _file
+    var fileList = mutableStateOf<List<File?>>(listOf())
+        private set
+
+    var focusedFile = mutableStateOf<FocusedFile?>(null)
+        private set
 
     fun addFile(file: File) {
-        _file.value = file
+        if (file !in fileList.value) {
+            fileList.value = fileList.value + file
+            focusedFile.value = FocusedFile(file, fileList.value.indexOf(file))
+        }
+    }
+
+    fun selectFile(file: File) {
+        focusedFile.value = FocusedFile(file, fileList.value.indexOf(file))
     }
 }
