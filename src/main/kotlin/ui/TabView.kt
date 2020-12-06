@@ -9,13 +9,17 @@ import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import model.FocusedFile
 import java.io.File
 
 @Composable
-fun ViewerTabsView(files: List<File>, focusedFile: FocusedFile?, onClickTab: (File) -> Unit, onClickDelete: (File) -> Unit) {
+fun ViewerTabsView(
+    files: List<File>,
+    focusedFile: FocusedFile?,
+    onClickTab: (File) -> Unit,
+    onClickDelete: (File) -> Unit
+) {
     if (files.isNotEmpty()) {
         ScrollableTabRow(
             focusedFile?.index ?: 0,
@@ -35,8 +39,8 @@ fun ViewerTab(file: File, onClickTab: (File) -> Unit, onClickDelete: (File) -> U
         .padding(horizontal = 8.dp)
         .clickable { onClickTab(file) }
     ) {
-        Text(file.name, overflow = TextOverflow.Ellipsis, maxLines = 1)
-        Button(onClick = {onClickDelete(file)}) {
+        Text(file.name, maxLines = 1)
+        Button(onClick = { onClickDelete(file) }) {
             Text("X")
         }
     }

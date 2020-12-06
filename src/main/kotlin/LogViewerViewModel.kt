@@ -1,5 +1,6 @@
 import androidx.compose.runtime.mutableStateOf
 import model.FocusedFile
+import model.TextLine
 import java.io.File
 
 class LogViewerViewModel {
@@ -12,12 +13,14 @@ class LogViewerViewModel {
     fun addFile(file: File) {
         if (file !in fileList.value) {
             fileList.value = fileList.value + file
-            focusedFile.value = FocusedFile(file, fileList.value.indexOf(file))
+            val textLines = file.readLines().mapIndexed { index, s -> TextLine(index, s) }
+            focusedFile.value = FocusedFile(file, fileList.value.indexOf(file), textLines)
         }
     }
 
     fun selectFile(file: File) {
-        focusedFile.value = FocusedFile(file, fileList.value.indexOf(file))
+        val textLines = file.readLines().mapIndexed { index, s -> TextLine(index, s) }
+        focusedFile.value = FocusedFile(file, fileList.value.indexOf(file), textLines)
     }
 
     fun deleteFile(file: File) {
