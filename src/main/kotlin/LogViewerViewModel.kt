@@ -10,17 +10,20 @@ class LogViewerViewModel {
     var focusedFile = mutableStateOf<FocusedFile?>(null)
         private set
 
+    var searchText = mutableStateOf("")
+        private set
+
     fun addFile(file: File) {
         if (file !in fileList.value) {
             fileList.value = fileList.value + file
             val textLines = file.readLines().mapIndexed { index, s -> TextLine(index, s) }
-            focusedFile.value = FocusedFile(file, fileList.value.indexOf(file), textLines)
+            focusedFile.value = FocusedFile(file, fileList.value.indexOf(file), textLines ,textLines)
         }
     }
 
     fun selectFile(file: File) {
         val textLines = file.readLines().mapIndexed { index, s -> TextLine(index, s) }
-        focusedFile.value = FocusedFile(file, fileList.value.indexOf(file), textLines)
+        focusedFile.value = FocusedFile(file, fileList.value.indexOf(file), textLines, textLines)
     }
 
     fun deleteFile(file: File) {
@@ -47,5 +50,15 @@ class LogViewerViewModel {
             }
         }
         fileList.value = newFileList
+    }
+
+    fun searchLine(text: String) {
+        searchText.value = text
+        val fullTextLines = focusedFile.value?.fullTextLines ?: listOf()
+        focusedFile.value = if (text.isBlank()) {
+            focusedFile.value?.copy(searchedTextLines = fullTextLines)
+        } else {
+            focusedFile.value?.copy(searchedTextLines = fullTextLines.filter { text in it.text })
+        }
     }
 }

@@ -49,7 +49,7 @@ fun main() = invokeLater {
     composePanel.setContent {
         LogViewerWindow(logViewerViewModel)
     }
-    window.setSize(1000, 500)
+    window.setSize(1200, 600)
     window.isVisible = true
 }
 
@@ -57,7 +57,7 @@ private fun targetZone(target: DropTarget): JButton {
     return JButton().apply {
         toolTipText = "ToolTip!"
         text = "Drop files"
-        preferredSize = Dimension(300, 100)
+        preferredSize = Dimension(250, 100)
         dropTarget = target
     }
 }
