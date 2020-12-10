@@ -1,1 +1,1 @@
-compose-jb-study
+Txt file log viewer
