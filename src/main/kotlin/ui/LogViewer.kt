@@ -1,17 +1,19 @@
 package ui
 
 import LogViewerViewModel
-import activeBlue
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import clouds
 import model.FocusedFile
 
+@ExperimentalFoundationApi
 @Composable
 fun LogViewerWindow(logViewerViewModel: LogViewerViewModel) {
     val fileList = logViewerViewModel.fileList.value
@@ -33,7 +35,10 @@ fun LogViewerWindow(logViewerViewModel: LogViewerViewModel) {
             if (focusedFile != null) {
                 Box(modifier = Modifier.background(clouds)) {
                     TextViewer(focusedFile)
-                    SearchTextView(logViewerViewModel.searchText.value) {
+                    SearchTextView(
+                        logViewerViewModel.searchText.value,
+                        modifier = Modifier.padding(end = 20.dp)
+                    ) {
                         logViewerViewModel.searchLine(it)
                     }
                 }
