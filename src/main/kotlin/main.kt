@@ -1,4 +1,5 @@
 import androidx.compose.desktop.ComposePanel
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,7 @@ import javax.swing.WindowConstants
 
 val logViewerViewModel = LogViewerViewModel()
 
+@ExperimentalFoundationApi
 fun main() = invokeLater {
     val window = JFrame()
     val composePanel = ComposePanel()

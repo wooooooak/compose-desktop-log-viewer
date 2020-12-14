@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "me.wooooooak"
-version = "1.0"
+version = "1.1.0"
 
 repositories {
     jcenter()
@@ -26,7 +26,7 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile>() {
-    kotlinOptions.jvmTarget = "15"
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 compose.desktop {
